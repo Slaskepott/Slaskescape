@@ -474,6 +474,9 @@ def death():
 	inventory = {}
 	player.currenthp = player.maxhp
 	incombat = 0
+	goblin.currenthp = goblin.maxhp
+	farmer.currenthp = farmer.maxhp
+	baby_dragon.currenthp = baby_dragon.maxhp
 	setmenu(0)
 	player.action = 3
 
@@ -618,7 +621,78 @@ class Fighter():
 		goblin.currenthp = goblin.maxhp
 		farmer.currenthp = farmer.maxhp
 		baby_dragon.currenthp = baby_dragon.maxhp
+		self.getloot()
 		refreshlevel()
+
+	def getloot(self):
+		#reference goblin:50, farmer:100, babydragon:500
+		lootmodifier = self.maxhp
+		random_modifier = random.randint(100,150) / 100
+		refreshlevel()
+		level_modifier = (attack.level + defence.level + hitpoints.level) / 3
+
+		lootint = round((lootmodifier * random_modifier) + level_modifier)
+		print("Lootint is: " + str(lootint))
+		tier = 0
+		rareroll = False
+
+		loot_tier1 = ['Trout']
+		loot_tier1_rare = ['Bronze sword', 'Bronze shield', 'Bronze helmet', 'Bronze breastplate', 'Bronze legguards']
+		loot_tier2 = ['Lobster']
+		loot_tier2_rare = ['Iron sword', 'Iron shield', 'Iron helmet', 'Iron breastplate', 'Iron legguards']
+
+		#Check to see if recieving loot at all - 70% chance
+		getsloot = random.randint(0, 100)
+		if getsloot > 30:
+			#checks to determine loot table
+			if lootint < 75:
+				tier = 1
+			elif lootint >= 75:
+				tier = 2
+
+			#Checks to see if recieving rare loot - 20% chance
+			getsrare = random.randint(0,100)
+			if getsrare > 80:
+				rareroll = True
+
+			#Set name of table to search
+			loottable = []
+			if tier == 1 and rareroll == False:
+				loottable = loot_tier1
+			elif tier == 1 and rareroll == True:
+				loottable = loot_tier1_rare
+			elif tier == 2 and rareroll == False:
+				loottable = loot_tier2
+			elif tier == 2 and rareroll == True:
+				loottable = loot_tier2_rare
+
+			#Randomize loot within table
+			length = len(loottable)
+			
+			print("Tier is: " + str(tier))
+			print("Rare loot: " + str(rareroll))
+			print("Length of lootable is: " + str(length))
+			if length == 1:
+				loot = loottable[0]
+			else:
+				randomizer = random.randint(0, length - 1)
+				index = randomizer
+				loot = loottable[index]
+
+			#Tell the player what he got
+			eventprint("You recieve " + str(loot))
+
+			#Add to inventory
+			if loot in inventory:
+				inventory[loot] += 1
+			else:
+				inventory[loot] = 1
+
+		else:
+			eventprint("You recieve no loot.")
+
+
+
 
 
 class HealthBar():
