@@ -1,0 +1,1 @@
+{"playergold": 0, "playerequipment": ["Raggedy helmet", "Raggedy breastplate", "Raggedy legguards", "Raggedy sword", "Raggedy shield"], "attackxp": 0, "defencexp": 0, "hitpointsxp": 0, "fishingxp": 0, "cookingxp": 0, "miningxp": 0, "smithingxp": 0}
