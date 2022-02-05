@@ -68,7 +68,7 @@ adamant_img = pygame.image.load(f"res/objects/adamant.png")
 rune_img = pygame.image.load(f"res/objects/rune.png")
 background_inventory_img = pygame.image.load("res/background_inventory.png")
 
-
+pygame.mixer.music.load("res/music.wav")
 
 
 #Monster sounds
@@ -796,6 +796,9 @@ falador_shop_dict = {
 "Fire rune":5,
 "Nature rune":5,
 }
+
+pygame.mixer.music.set_volume(0.05)
+pygame.mixer.music.play(-1)
 
 
 def set_buy_multiple(key):
